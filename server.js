@@ -29,7 +29,7 @@ app.use(helmet({
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
+
 
 // Rate limiting
 const limiter = rateLimit({
@@ -401,6 +401,14 @@ io.on('connection', (socket) => {
 });
 
 // Servir arquivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Rota principal
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Catch all para SPA
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
