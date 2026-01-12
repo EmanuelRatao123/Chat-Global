@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Global</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Tela de Login -->
+    <div id="loginScreen" class="screen active">
+        <div class="container">
+            <h1>Chat Global</h1>
+            <div id="loginForm" class="form-container">
+                <h2>Entrar</h2>
+                <form id="loginFormElement">
+                    <input type="text" id="loginUsername" placeholder="Nome de usuário" required>
+                    <input type="password" id="loginPassword" placeholder="Senha" required>
+                    <button type="submit">Entrar</button>
+                </form>
+                <p>Não tem uma conta? <a href="#" id="showRegister">Crie uma!</a></p>
+            </div>
+            
+            <div id="registerForm" class="form-container hidden">
+                <h2>Criar Conta</h2>
+                <form id="registerFormElement">
+                    <input type="text" id="registerUsername" placeholder="Nome de usuário" required>
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                    <input type="password" id="registerPassword" placeholder="Senha" required>
+                    <button type="submit">Criar Conta</button>
+                </form>
+                <p>Já tem uma conta? <a href="#" id="showLogin">Entre aqui!</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Banimento -->
+    <div id="banScreen" class="screen">
+        <div class="container">
+            <h1>Conta Banida</h1>
+            <div class="ban-info">
+                <p id="banReason"></p>
+                <p id="banExpires"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela Principal do Chat -->
+    <div id="chatScreen" class="screen">
+        <header>
+            <div class="header-left">
+                <h1>Chat Global</h1>
+                <span id="onlineCount">0 online</span>
+            </div>
+            <div class="header-right">
+                <button id="profileBtn">Perfil</button>
+                <button id="adminBtn" class="hidden">Admin</button>
+                <button id="logoutBtn">Sair</button>
+            </div>
+        </header>
+
+        <main class="chat-container">
+            <div class="sidebar">
+                <h3>Usuários Online</h3>
+                <div id="onlineUsers"></div>
+            </div>
+            
+            <div class="chat-area">
+                <div id="messages"></div>
+                <div class="message-input">
+                    <input type="text" id="messageInput" placeholder="Digite sua mensagem..." maxlength="500">
+                    <button id="sendBtn">Enviar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Perfil -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Meu Perfil</h2>
+            <form id="profileForm">
+                <div class="profile-picture">
+                    <img id="currentAvatar" src="" alt="Avatar">
+                    <input type="file" id="avatarInput" accept="image/*">
+                    <button type="button" id="uploadAvatarBtn">Alterar Foto</button>
+                </div>
+                <input type="text" id="profileUsername" placeholder="Nome de usuário">
+                <input type="email" id="profileEmail" placeholder="Email">
+                <input type="password" id="currentPassword" placeholder="Senha atual">
+                <input type="password" id="newPassword" placeholder="Nova senha">
+                <button type="submit">Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Admin -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content admin-panel">
+            <span class="close">&times;</span>
+            <h2>Painel Administrativo</h2>
+            
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="users">Usuários</button>
+                <button class="tab-btn" data-tab="bans">Banimentos</button>
+            </div>
+
+            <div id="usersTab" class="tab-content active">
+                <h3>Usuários Registrados</h3>
+                <div id="usersList"></div>
+            </div>
+
+            <div id="bansTab" class="tab-content">
+                <h3>Banir IP</h3>
+                <form id="banIpForm">
+                    <input type="text" id="banIp" placeholder="Endereço IP" required>
+                    <input type="text" id="banIpReason" placeholder="Motivo do banimento" required>
+                    <input type="number" id="banIpDuration" placeholder="Duração (minutos)" required>
+                    <button type="submit">Banir IP</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Banimento de Usuário -->
+    <div id="banUserModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Banir Usuário</h2>
+            <form id="banUserForm">
+                <input type="hidden" id="banUserId">
+                <p>Usuário: <span id="banUserName"></span></p>
+                <input type="text" id="banUserReason" placeholder="Motivo do banimento" required>
+                <input type="number" id="banUserDuration" placeholder="Duração (minutos)" required>
+                <button type="submit">Banir Usuário</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
